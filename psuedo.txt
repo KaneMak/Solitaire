@@ -1,0 +1,8 @@
+New game deals cards to seperate rows and piles in tableau
+first card is displayed
+
+event listener for tab card
+
+when clicked event listener for foundation cards
+
+when foundation click run if to compare codes

@@ -1,0 +1,78 @@
+/******************************************
+/* CSS
+/*******************************************/
+
+/* Box Model Hack */
+*{
+  box-sizing: border-box;
+}
+
+/******************************************
+/* LAYOUT
+/*******************************************/
+img{
+  display: block;
+  margin: 0 auto;
+}
+
+#topRow{
+  display: flex;
+  justify-content: space-around;
+  margin: 50px;
+}
+
+    #deck {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 325px;
+      height: 225px;
+      border: solid 3px green;
+    }
+
+        #stock {
+          background-color: blue;
+          width: 145px;
+        }
+
+        #waste {
+          width: 145px;
+        }
+
+    #foundation {
+      width: 650px;
+      height: 225px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+        #foundation img {
+          background-color: green;
+          width: 145px;
+        }
+
+
+#tab {
+  display: flex;
+  width: auto;
+  justify-content: space-around;
+  margin-top: 50px;
+  height: 500px
+}
+
+    #tab img {
+      background-color: orange;
+      width: 145px;
+    }
+
+
+div,
+img {
+  height: 200px;
+  border: solid 3px red;
+}
+
+/******************************************
+/* ADDITIONAL STYLES
+/*******************************************/
