@@ -1,8 +1,31 @@
-New game deals cards to seperate rows and piles in tableau
-first card is displayed
+New game deals cards to seperate rows in tableau
+each row is an array (maybe two, one for face up and one for face down)
+first card (element 0) is displayed
+
+e
 
 event listener for tab card
 
 when clicked event listener for foundation cards
 
 when foundation click run if to compare codes
+
+
+
+CLICK CARD
+
+take visible card (element 0 of array in row)
+    set visible card to chosenCard
+    change chosenCard value to Number
+
+    call moveCard function
+        set addEventListener for each suit
+
+        on click on a suit
+            compare chosenCard value and suit with clicked suit visibleCard value and suit
+            if matching suit and chosenCard value === visibleCard value + 1 accept new card into suit array and display suit array [0]
+            remove original visibleCard element [0]
+
+            removeEventListener
+            set chosenCard value null
+            

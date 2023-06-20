@@ -5,14 +5,20 @@ const solitaire = {
     get apiBase(){
         return `https://deckofcardsapi.com/api/deck/${solitaire.deckID}`
     } ,
-    rowSelector: "",
-    waste: {},
-    chosenCard: {},
+
+    newButton: document.querySelector('#new'),
+    shuffleButton: document.querySelector('#shuffle'),
+
+    waste: {
+        cardData: []
+    },
+
+    chosenCard: [],
 
     foundation: {
 
         club: {
-            cardValue: 0,
+            cardData: [],
             visibleCard: {},
         },
 
@@ -25,36 +31,9 @@ const solitaire = {
 
     rowSeven: {
         cardData: [],
-        cardCodes: [],
-        cardValues: [],
         visibleCard: {},
-
-        changeValues: function(){
-            for(let i = 0; i < solitaire.rowSeven.cardData.length; i++){
-                if(solitaire.rowSeven.cardData[i].value === "JACK"){
-                    solitaire.rowSeven.cardValues.push(11)
-                }else if(solitaire.rowSeven.cardData[i].value === "QUEEN"){
-                    solitaire.rowSeven.cardValues.push(12)
-                }else if(solitaire.rowSeven.cardData[i].value === "KING"){
-                    solitaire.rowSeven.cardValues.push(13)
-                }else if(solitaire.rowSeven.cardData[i].value === "ACE"){
-                    solitaire.rowSeven.cardValues.push(1)
-                }else{
-                    solitaire.rowSeven.cardValues.push(Number(solitaire.rowSeven.cardData[i].value))
-                }
-            }
-        },
-
-        get strCardCodes(){
-            return this.cardCodes.join()
-        },
-
-        
         
     },
-
-    newButton: document.querySelector('#new'),
-    shuffleButton: document.querySelector('#shuffle'),
 
     drawCard: function(){
         let url = `${solitaire.apiBase}/draw/?count=1`;
@@ -63,8 +42,9 @@ const solitaire = {
             .then(res => res.json()) // parse response as JSON
             .then(data => {
                 console.log(data)
-                solitaire.waste = data.cards[0]
+                // solitaire.waste = data.cards[0]
                 document.querySelector('#waste').src = data.cards[0].image
+                solitaire.waste.cardData.unshift(data.cards[0])
             })
             .catch(err => {
                 console.log(`error ${err}`)
@@ -82,7 +62,6 @@ const solitaire = {
                 solitaire.rowSeven.cardData = [card[0], card[1], card[2], card[3], card[4], card[5], card[6]];
                 solitaire.rowSeven.visibleCard = card[0]
                 document.querySelector('#rowSeven').src = solitaire.rowSeven.cardData[0].image
-                solitaire.rowSeven.changeValues()
                 
             })
             .catch(err => {
@@ -113,63 +92,75 @@ const solitaire = {
 
 
     selectCard: function(card) {
-        console.log(card.value)
+        console.log(solitaire[card])
 
-        if(card.value === "JACK"){
-            card.value = 11
-        }else if(card.value === "QUEEN"){
-            card.value = 12
-        }else if(card.value === "KING"){
-            card.value = 13
-        }else if(card.value === "ACE"){
-            card.value = 1
+        if(solitaire[card].cardData[0].value === "JACK"){
+            solitaire[card].cardData[0].value = 11
+        }else if(solitaire[card].cardData[0].value === "QUEEN"){
+            solitaire[card].cardData[0].value = 12
+        }else if(solitaire[card].cardData[0].value === "KING"){
+            solitaire[card].cardData[0].value = 13
+        }else if(solitaire[card].cardData[0].value === "ACE"){
+            solitaire[card].cardData[0].value = 1
         }else{
-            card.value = card.value
+            solitaire[card].cardData[0].value = solitaire[card].cardData[0].value
         }
         
-        solitaire.chosenCard = card
-        console.log(card.value)
+        solitaire.chosenCard = [solitaire[card].cardData[0]]
+        console.log(solitaire[card].cardData[0].value)
 
     },
 
     moveCard: function(a) {
         
         document.querySelector('#club').addEventListener('click', addClub)
-        document.querySelector('#heart').addEventListener('click', addHeart)
+        // document.querySelector('#heart').addEventListener('click', addHeart)
 
-
+        solitaire.selectCard(a);
         
 
         function addClub() {
             
-            solitaire.foundation.club.visibleCard = solitaire[a].visibleCard;
-            document.querySelector('#club').src = solitaire.foundation.club.visibleCard.image;
+            solitaire.foundation.club.cardData.unshift(solitaire.chosenCard[0])
+            document.querySelector('#club').src = solitaire.foundation.club.cardData[0].image
             solitaire[a].cardData.shift()
-            solitaire[a].visibleCard = solitaire[a].cardData[0]
             if(solitaire[a].cardData.length === 0){
                 document.querySelector(`#${a}`).src = ""
             }else{
                 document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
-            }              
+            } 
             document.querySelector('#club').removeEventListener('click', addClub)
-            document.querySelector('#heart').removeEventListener('click', addHeart)
+           
+
+            // solitaire.foundation.club.visibleCard = solitaire[a].visibleCard;
+            // document.querySelector('#club').src = solitaire.foundation.club.visibleCard.image;
+            // solitaire[a].cardData.shift()
+            // solitaire[a].visibleCard = solitaire[a].cardData[0]
+            // if(solitaire[a].cardData.length === 0){
+            //     document.querySelector(`#${a}`).src = ""
+            // }else{
+            //     document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
+            // }              
+            // document.querySelector('#club').removeEventListener('click', addClub)
+            // document.querySelector('#heart').removeEventListener('click', addHeart)
             
         }
+        
 
-        function addHeart() {
-            solitaire.foundation.heart.visibleCard = solitaire[a].visibleCard;
-            document.querySelector('#heart').src = solitaire.foundation.heart.visibleCard.image;
-            solitaire[a].cardData.shift()
-            solitaire[a].visibleCard = solitaire[a].cardData[0]
-            if(solitaire[a].cardData.length === 0){
-                document.querySelector(`#${a}`).src = ""
-            }else{
-                document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
-            }              
-            document.querySelector('#heart').removeEventListener('click', addHeart)
-            document.querySelector('#club').removeEventListener('click', addClub)
+        // function addHeart() {
+        //     solitaire.foundation.heart.visibleCard = solitaire[a].visibleCard;
+        //     document.querySelector('#heart').src = solitaire.foundation.heart.visibleCard.image;
+        //     solitaire[a].cardData.shift()
+        //     solitaire[a].visibleCard = solitaire[a].cardData[0]
+        //     if(solitaire[a].cardData.length === 0){
+        //         document.querySelector(`#${a}`).src = ""
+        //     }else{
+        //         document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
+        //     }              
+        //     document.querySelector('#heart').removeEventListener('click', addHeart)
+        //     document.querySelector('#club').removeEventListener('click', addClub)
 
-        }
+        // }
 
         
     },
@@ -194,8 +185,9 @@ const solitaire = {
         solitaire.newButton.addEventListener('click', solitaire.dealCards)
         solitaire.shuffleButton.addEventListener('click', solitaire.shuffle)
         document.querySelector('#stock').addEventListener('click', solitaire.drawCard)
-        document.querySelector('#waste').addEventListener('click', function() {solitaire.selectCard(solitaire.waste)})
+        document.querySelector('#waste').addEventListener('click', function() {solitaire.moveCard("waste")})
         document.querySelector('#rowSeven').addEventListener('click', function() {solitaire.moveCard("rowSeven")})
+        // document.querySelector('#club').addEventListener('click', function() {solitaire.moveCard("club")})
     },
 
     
