@@ -129,6 +129,8 @@ const solitaire = {
             }else{
                 document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
             } 
+
+            solitaire.chosenCard = [],
             document.querySelector('#club').removeEventListener('click', addClub)
            
 

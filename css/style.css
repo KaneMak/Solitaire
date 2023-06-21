@@ -10,6 +10,10 @@
 /******************************************
 /* LAYOUT
 /*******************************************/
+body {
+  background-color: green;
+}
+
 img{
   display: block;
   margin: 0 auto;
@@ -27,12 +31,12 @@ img{
       align-items: center;
       width: 325px;
       height: 225px;
-      border: solid 3px green;
+      border: solid 2px #519651;
     }
 
         #stock {
-          background-color: blue;
           width: 145px;
+          border: solid 2px #519651;
         }
 
         #waste {
@@ -48,8 +52,8 @@ img{
     }
 
         #foundation img {
-          background-color: green;
           width: 145px;
+          border: solid 2px #519651;
         }
 
 
@@ -57,21 +61,33 @@ img{
   display: flex;
   width: auto;
   justify-content: space-around;
-  margin-top: 50px;
+  margin-top: 200px;
   height: 500px
 }
 
+#tab img:first-child {
+  border: solid 2px #519651;
+
+}
+  #tab .piles {
+    display: flex;
+    flex-direction: column;
+  }
+  
+
     #tab img {
-      background-color: orange;
       width: 145px;
+      margin-top: -150px;
     }
 
 
 div,
 img {
   height: 200px;
-  border: solid 3px red;
 }
+
+
+
 
 /******************************************
 /* ADDITIONAL STYLES
