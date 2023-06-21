@@ -61,11 +61,11 @@ img{
   display: flex;
   width: auto;
   justify-content: space-around;
-  margin-top: 200px;
   height: 500px
 }
 
 #tab img:first-child {
+  margin-top: 0px;
   border: solid 2px #519651;
 
 }
@@ -81,12 +81,14 @@ img{
     }
 
 
-div,
+/* div,
 img {
   height: 200px;
+} */
+
+.hidden {
+  display: none;
 }
-
-
 
 
 /******************************************

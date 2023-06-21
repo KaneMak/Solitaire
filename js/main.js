@@ -61,17 +61,19 @@ const solitaire = {
                 let card = data.cards
                 solitaire.rowSeven.cardData = [card[0], card[1], card[2], card[3], card[4], card[5], card[6]];
                 solitaire.rowSeven.visibleCard = card[0]
-                document.querySelector('#rowSeven').src = solitaire.rowSeven.cardData[0].image
+                document.querySelector('#sevenSeven').src = solitaire.rowSeven.cardData[0].image
                 
             })
             .catch(err => {
                 console.log(`error ${err}`)
             });
 
-            document.querySelector('#club').src = ""
-            document.querySelector('#heart').src = ""
+            document.querySelector('#club').src = "images/clubBG.png"
+            document.querySelector('#heart').src = "images/heartBG.png"
+            document.querySelector('#spade').src = "images/spadeBG.png"
+            document.querySelector('#diamond').src = "images/diamondBG.png"
             solitaire.clubNum = 0
-            document.querySelector('#waste').src = ""
+            document.querySelector('#waste').src = "images/green.png"
     },
 
     shuffle: function() {
@@ -87,7 +89,11 @@ const solitaire = {
                 console.log(`error ${err}`)
             });
 
-        document.querySelector('#club').src = ""
+        document.querySelector('#club').src = "images/clubBG.png"
+        document.querySelector('#heart').src = "images/heartBG.png"
+        document.querySelector('#spade').src = "images/spadeBG.png"
+        document.querySelector('#diamond').src = "images/diamondBG.png"
+        document.querySelector('#waste').src = "images/green.png"
     },
 
 
@@ -120,15 +126,19 @@ const solitaire = {
         
 
         function addClub() {
-            
+            let num = solitaire.rowSeven.cardData.length
             solitaire.foundation.club.cardData.unshift(solitaire.chosenCard[0])
             document.querySelector('#club').src = solitaire.foundation.club.cardData[0].image
             solitaire[a].cardData.shift()
             if(solitaire[a].cardData.length === 0){
-                document.querySelector(`#${a}`).src = ""
+                document.querySelector(`#${a}`).src = "images/green.png"
             }else{
                 document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
             } 
+
+            document.querySelector(`#rowSeven img:nth-child(${num})`).classList.add('hidden')
+            document.querySelector(`#rowSeven img:nth-child(${num - 1}`).src = solitaire.rowSeven.cardData[0].image
+            
 
             solitaire.chosenCard = [],
             document.querySelector('#club').removeEventListener('click', addClub)
@@ -167,22 +177,6 @@ const solitaire = {
         
     },
 
-    // addClub: function() {
-        
-    //     solitaire.foundation.club.visibleCard = solitaire[a].visibleCard;
-    //     document.querySelector('#club').src = solitaire.foundation.club.visibleCard.image;
-    //     solitaire[a].cardData.shift()
-    //     solitaire[a].visibleCard = solitaire[a].cardData[0]
-    //     if(solitaire[a].cardData.length === 0){
-    //         document.querySelector(`#${a}`).src = ""
-    //     }else{
-    //         document.querySelector(`#${a}`).src = solitaire[a].cardData[0].image
-    //     }              
-    //     document.querySelector('#club').removeEventListener('click', addClubFunction)
-    //     // document.querySelector('#heart').removeEventListener('click', addHeart)
-            
-    // },
-    
     init: function() {
         solitaire.newButton.addEventListener('click', solitaire.dealCards)
         solitaire.shuffleButton.addEventListener('click', solitaire.shuffle)
@@ -191,8 +185,6 @@ const solitaire = {
         document.querySelector('#rowSeven').addEventListener('click', function() {solitaire.moveCard("rowSeven")})
         // document.querySelector('#club').addEventListener('click', function() {solitaire.moveCard("club")})
     },
-
-    
 
 }
 
